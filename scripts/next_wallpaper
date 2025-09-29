@@ -1,7 +1,6 @@
 #!/bin/bash
 
 COUNTER_FILE="$HOME/.config/backgrounds/script/counter"
-SET_SCRIPT="$HOME/.config/backgrounds/script/set_wallpaper.sh"
 
 # Ensure counter file exists
 if [[ ! -f "$COUNTER_FILE" ]]; then
@@ -14,4 +13,4 @@ NEW_COUNTER=$((COUNTER + 1))
 echo "$NEW_COUNTER" > "$COUNTER_FILE"
 
 # Call the set_wallpaper script
-bash "$SET_SCRIPT"
+set_wallpaper
