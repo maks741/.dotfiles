@@ -1,0 +1,42 @@
+*
+
+!.gitignore
+
+# scripts
+!scripts/
+!scripts/**
+
+# mwww music widget
+!mwww/
+!mwww/**
+mwww/commands.fifo
+mwww/songs/**
+
+# wallpapers
+!backgrounds/
+!backgrounds/**
+# ignore wallpaper temp counter
+backgrounds/script/counter
+
+# fastfetch
+!fastfetch/
+!fastfetch/**
+
+# hyprland ecosystem
+!hypr/
+!hypr/**
+
+# kitty terminal
+!kitty/
+!kitty/**
+
+# starship
+!starship.toml
+
+# waybar status bar
+!waybar/
+!waybar/**
+
+# wofi app launcher
+!wofi/
+!wofi/**
