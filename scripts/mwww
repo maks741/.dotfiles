@@ -1,0 +1,22 @@
+#!/bin/bash
+
+FIFO="$HOME/.config/mwww/commands.fifo"
+
+case "$1" in
+  reload-style)
+    echo "reload-style" > "$FIFO"
+    ;;
+  set)
+    if [ -z "$2" ]; then
+      echo "Error: Missing value for 'set' command."
+      echo "Usage: $0 set 'some value'"
+      exit 1
+    fi
+    echo "set:$2" > "$FIFO"
+    ;;
+  *)
+    echo "Usage: mwww { reload-style | set <value> }"
+    exit 1
+    ;;
+esac
+
