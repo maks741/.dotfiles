@@ -1,0 +1,17 @@
+###
+### General
+###
+# In order for scripts to be accessible globally, export this dir to $PATH:
+export PATH=$HOME/.config/scripts:$PATH
+
+# Additionally, make sure to make all scripts executable:
+chmod +x {script}
+
+
+###
+### Brightness
+###
+
+# In order for brightness scripts to work, add the following line to
+/etc/rc.local:
+sudo chmod o+w /sys/class/backlight/intel_backlight/brightness

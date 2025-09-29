@@ -1,0 +1,17 @@
+#!/bin/bash
+
+brightness_file="/sys/class/backlight/intel_backlight/brightness"
+brightness=$(cat $brightness_file)
+
+min_brightness=300
+delta=750
+
+diff=$(($brightness-$delta))
+
+echo $diff
+
+if [ $diff -gt $min_brightness ]; then
+	echo $diff > "/sys/class/backlight/intel_backlight/brightness"
+else
+	echo "diff too low"
+fi
