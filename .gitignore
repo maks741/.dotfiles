@@ -12,11 +12,9 @@
 mwww/commands.fifo
 mwww/songs/**
 
-# wallpapers
-!backgrounds/
-!backgrounds/**
-# ignore wallpaper temp counter
-backgrounds/script/counter
+# themes
+!themes/
+!themes/**
 
 # fastfetch
 !fastfetch/

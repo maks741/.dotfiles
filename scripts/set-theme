@@ -1,0 +1,80 @@
+#!/bin/bash
+
+
+# Get the theme name
+THEME="$1"
+if [ -z "$THEME" ]; then
+    echo "Usage: set-theme '<theme>'"
+    exit 1
+fi
+
+
+# Check if theme dir exists
+THEME_DIR="$HOME/.config/themes/$THEME"
+if [ ! -d "$THEME_DIR" ]; then
+    echo "Theme dir $THEME does not exist"
+    exit 1
+fi
+
+
+# Check if all required theme files exist
+REQUIRED_FILES=(
+    "/hypr/hyprlock/avatar"
+    "/hypr/hyprlock.conf"
+    "/kitty/current-theme.conf"
+    "/kitty/kitty.conf"
+    "/mwww/style.css"
+    "/waybar/style.css"
+    "/wofi/style.css"
+    "/wallpaper"
+)
+
+for file in "${REQUIRED_FILES[@]}"; do
+    if [ ! -f "$THEME_DIR$file" ]; then
+        echo "Missing required file: $THEME_DIR$file"
+        exit 1
+    fi
+done
+
+echo "All required files exist for theme '$THEME'."
+
+
+# Copy all theme files to corresponding files in ~/.config
+CONFIG_DIR="$HOME/.config"
+
+echo "Applying hyprlock conf..."
+cp "$THEME_DIR/hypr/hyprlock/avatar" "$CONFIG_DIR/hypr/hyprlock/avatar"
+cp "$THEME_DIR/hypr/hyprlock.conf" "$CONFIG_DIR/hypr/hyprlock.conf"
+echo "hyprlock conf applied"
+
+echo "Applying kitty conf..."
+cp "$THEME_DIR/kitty/current-theme.conf" "$CONFIG_DIR/kitty/current-theme.conf"
+cp "$THEME_DIR/kitty/kitty.conf" "$CONFIG_DIR/kitty/kitty.conf"
+echo "kitty conf applied"
+
+echo "Applying mwww conf..."
+cp "$THEME_DIR/mwww/style.css" "$CONFIG_DIR/mwww/style.css"
+mwww reload-style
+echo "mwww conf applied"
+
+echo "Applying waybar conf..."
+cp "$THEME_DIR/waybar/style.css" "$CONFIG_DIR/waybar/style.css"
+killall waybar 2>/dev/null
+waybar & disown
+echo "waybar conf applied"
+
+echo "Applying wofi conf..."
+cp "$THEME_DIR/wofi/style.css" "$CONFIG_DIR/wofi/style.css"
+echo "wofi conf applied"
+
+echo "Changing wallpaper..."
+RAND=$(( RANDOM % 2 ))
+case $RAND in
+    0)
+        swww img "$THEME_DIR/wallpaper" --transition-fps 60 --transition-step 255 --transition-type wipe
+        ;;
+    1)
+        swww img "$THEME_DIR/wallpaper" --transition-fps 60 --transition-step 255 --transition-type any
+        ;;
+esac
+echo "wallpaper changed"
