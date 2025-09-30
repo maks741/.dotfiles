@@ -1,0 +1,96 @@
+#!/bin/bash
+
+URL="$1"
+if [ -z "$URL" ]; then
+    echo "Usage: bash youtube_download.sh '<url>'"
+    exit 1
+fi
+
+
+# Check if download dir exists and create one if not
+BASE_DIR="$HOME/.config/mwww/songs/"
+if [ ! -d "$BASE_DIR" ]; then
+    echo "Directory '~/.config/mwww/songs' does not exist. Creating..."
+    mkdir -p "$BASE_DIR" || {
+        echo "Error: Could not create $BASE_DIR"
+        exit 1
+    }
+fi
+
+
+OUTPUT_TEMPLATE="%(uploader)s^%(title)s"
+echo "Download url: $1"
+echo "Output template: '$OUTPUT_TEMPLATE'"
+
+
+# 1. Get the directory name using --print
+_yt_dlp_dir_name=$(yt-dlp --print "$OUTPUT_TEMPLATE" "$URL")
+# Replace '/' with '|'
+_yt_dlp_dir_name="${_yt_dlp_dir_name//\//|}"
+
+# Check if the command was successful and a directory name was captured
+if [ -z "$_yt_dlp_dir_name" ]; then
+    echo "Error: Could not retrieve the directory name for $URL"
+    exit 1
+fi
+
+echo "Output directory name: $_yt_dlp_dir_name"
+
+
+# 2. Run the main download command
+yt-dlp "$URL" \
+  -f bestaudio \
+  --extract-audio \
+  --audio-format wav \
+  --audio-quality 0 \
+  --write-thumbnail \
+  --convert-thumbnails png \
+  --output "$BASE_DIR/temp/output.%(ext)s"
+
+# Check if the download was successful
+if [ $? -eq 0 ]; then
+    echo "Download successful."
+else
+    echo "Download failed."
+    exit 1
+fi
+
+
+cd "$BASE_DIR" || {
+    echo "Error: Could cd to $BASE_DIR"
+    exit 1
+}
+
+
+# Check if a dir with the same name already exists
+if [ -d "$_yt_dlp_dir_name" ]; then
+    echo "Directory '$_yt_dlp_dir_name' Already exists. Exiting"
+    exit 1
+fi
+
+
+echo "Moving output from temp dir"
+mkdir "$_yt_dlp_dir_name"
+mv temp/* "$_yt_dlp_dir_name"
+rmdir temp
+cd "$_yt_dlp_dir_name"
+
+
+echo "Using ffmpeg to crop the thumbnail..."
+ffmpeg -i output.png -vf "crop=min(iw\,ih):min(iw\,ih),scale=400:400:flags=lanczos,format=rgba,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='if(lte((X-200)^2+(Y-200)^2\,200*200)\,255\,0)',scale=30:30:flags=lanczos" img.png
+
+# Check if cropping was successful
+if [ $? -eq 0 ]; then
+    echo "Thumbnail cropped. Removing initial thumbnail..."
+    rm "output.png"
+else
+    echo "Cropping failed."
+    exit 1
+fi
+
+
+echo "Cleaning up..."
+mv "./output.wav" "./media.wav"
+
+
+echo "Done"
