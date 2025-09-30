@@ -50,6 +50,7 @@ echo "hyprlock conf applied"
 echo "Applying kitty conf..."
 cp "$THEME_DIR/kitty/current-theme.conf" "$CONFIG_DIR/kitty/current-theme.conf"
 cp "$THEME_DIR/kitty/kitty.conf" "$CONFIG_DIR/kitty/kitty.conf"
+kill -SIGUSR1 $(pgrep kitty)
 echo "kitty conf applied"
 
 echo "Applying mwww conf..."
