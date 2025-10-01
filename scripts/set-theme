@@ -19,6 +19,7 @@ fi
 
 # Check if all required theme files exist
 REQUIRED_FILES=(
+    "/hypr/hyprland.conf"
     "/hypr/hyprlock/avatar"
     "/hypr/hyprlock.conf"
     "/kitty/current-theme.conf"
@@ -26,6 +27,7 @@ REQUIRED_FILES=(
     "/mwww/style.css"
     "/waybar/style.css"
     "/wofi/style.css"
+    "/starship.toml"
     "/wallpaper"
 )
 
@@ -41,6 +43,10 @@ echo "All required files exist for theme '$THEME'."
 
 # Copy all theme files to corresponding files in ~/.config
 CONFIG_DIR="$HOME/.config"
+
+echo "Applying hyprland conf..."
+cp "$THEME_DIR/hypr/hyprland.conf" "$CONFIG_DIR/hypr/hyprland.conf"
+echo "hyprland conf applied"
 
 echo "Applying hyprlock conf..."
 cp "$THEME_DIR/hypr/hyprlock/avatar" "$CONFIG_DIR/hypr/hyprlock/avatar"
@@ -67,6 +73,10 @@ echo "waybar conf applied"
 echo "Applying wofi conf..."
 cp "$THEME_DIR/wofi/style.css" "$CONFIG_DIR/wofi/style.css"
 echo "wofi conf applied"
+
+echo "Applying starship conf..."
+cp "$THEME_DIR/starship.toml" "$CONFIG_DIR/starship.toml"
+echo "starship conf applied"
 
 echo "Changing wallpaper..."
 RAND=$(( RANDOM % 2 ))
