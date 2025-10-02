@@ -6,6 +6,10 @@
 !scripts/
 !scripts/**
 
+# current wallpaper
+!wallpapers/
+!wallpapers/current
+
 # mwww music widget
 !mwww/
 !mwww/**

@@ -79,6 +79,7 @@ cp "$THEME_DIR/starship.toml" "$CONFIG_DIR/starship.toml"
 echo "starship conf applied"
 
 echo "Changing wallpaper..."
+cp "$THEME_DIR/wallpaper" "$CONFIG_DIR/wallpapers/current"
 RAND=$(( RANDOM % 2 ))
 case $RAND in
     0)
