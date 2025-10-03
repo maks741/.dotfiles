@@ -67,7 +67,7 @@ echo "mwww conf applied"
 echo "Applying waybar conf..."
 cp "$THEME_DIR/waybar/style.css" "$CONFIG_DIR/waybar/style.css"
 killall waybar 2>/dev/null
-waybar & disown
+waybar &
 echo "waybar conf applied"
 
 echo "Applying wofi conf..."
