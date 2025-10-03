@@ -28,6 +28,7 @@ REQUIRED_FILES=(
     "/waybar/style.css"
     "/wofi/style.css"
     "/starship.toml"
+    "/theme-picker/config.yaml"
     "/wallpaper"
 )
 
@@ -77,6 +78,10 @@ echo "wofi conf applied"
 echo "Applying starship conf..."
 cp "$THEME_DIR/starship.toml" "$CONFIG_DIR/starship.toml"
 echo "starship conf applied"
+
+echo "Applying theme picker conf..."
+cp "$THEME_DIR/theme-picker/config.yaml" "$CONFIG_DIR/theme-picker/config.yaml"
+echo "theme picker conf applied"
 
 echo "Changing wallpaper..."
 cp "$THEME_DIR/wallpaper" "$CONFIG_DIR/wallpapers/current"

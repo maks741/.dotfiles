@@ -42,3 +42,7 @@ mwww/songs/**
 # wofi app launcher
 !wofi/
 !wofi/**
+
+# theme picker
+!theme-picker/
+!theme-picker/**
