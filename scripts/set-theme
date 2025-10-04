@@ -24,6 +24,7 @@ REQUIRED_FILES=(
     "/hypr/hyprlock.conf"
     "/kitty/current-theme.conf"
     "/kitty/kitty.conf"
+    "/mwww/config.yaml"
     "/mwww/style.css"
     "/waybar/style.css"
     "/wofi/style.css"
@@ -61,7 +62,9 @@ kill -SIGUSR1 $(pgrep kitty)
 echo "kitty conf applied"
 
 echo "Applying mwww conf..."
+cp "$THEME_DIR/mwww/config.yaml" "$CONFIG_DIR/mwww/config.yaml"
 cp "$THEME_DIR/mwww/style.css" "$CONFIG_DIR/mwww/style.css"
+mwww reload-config
 mwww reload-style
 echo "mwww conf applied"
 
