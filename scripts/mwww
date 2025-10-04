@@ -3,19 +3,36 @@
 FIFO="$HOME/.config/mwww/commands.fifo"
 
 case "$1" in
+  hide)
+    echo "hide" > "$FIFO"
+    ;;
+  show)
+    echo "show" > "$FIFO"
+    ;;
   reload-style)
     echo "reload-style" > "$FIFO"
+    ;;
+  reload-config)
+    echo "reload-config" > "$FIFO"
     ;;
   set)
     if [ -z "$2" ]; then
       echo "Error: Missing value for 'set' command."
-      echo "Usage: $0 set 'some value'"
+      echo "Usage: $0 set 'song name'"
       exit 1
     fi
     echo "set:$2" > "$FIFO"
     ;;
+  skip-duration)
+    if [ -z "$2" ]; then
+      echo "Error: Missing value for 'skip-duration' command."
+      echo "Usage: $0 skip-duration 'duration in seconds'"
+      exit 1
+    fi
+    echo "skip-duration:$2" > "$FIFO"
+    ;;
   *)
-    echo "Usage: mwww { reload-style | set <value> }"
+	  echo "Usage: mwww { hide | show | reload-style | reload-config | set <song name> | skip-duration <duration in seconds> }"
     exit 1
     ;;
 esac
