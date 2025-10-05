@@ -18,6 +18,14 @@ window#waybar.hidden {
      opacity: 0.2;
 }
 
+#window,
+#workspaces {
+    margin: 0px 4px;
+}
+
+
+
+
 #workspaces {
     background-color: #171717;
     border-radius: 20px;
@@ -48,53 +56,48 @@ window#waybar.hidden {
     background-color: rgb(90, 90, 90);
 }
 
-#mode {
-    background-color: #64727D;
-    border-bottom: 3px solid #ffffff;
+
+
+
+.modules-right {
+    background-color: #171717;
+    border-radius: 20px;
 }
 
-#clock,
-#battery,
+
+
+
+#language,
+#pulseaudio,
 #cpu,
 #memory,
-#disk,
 #temperature,
 #backlight,
+#battery,
+#battery.charging,
+#battery.plugged,
 #network,
-#pulseaudio,
-#mode,
-#mpd {
-    padding: 0 10px;
-    color: #ffffff;
-}
-
-#window,
-#workspaces {
-    margin: 0px 4px;
-}
-
 #clock {
-    background-color: #171717;
     color: #ffffff;
-    border-radius: 0 20px 20px 0;
-    padding: 0 20px 0 10px;
+    padding: 0 10px;
 }
 
-#battery {
-    background-color: #171717;
-    color: #ffffff;
+#language {
+    border-radius: 20px 0 0 20px;
+    padding: 0 0 0 20px;
+    min-width: 16px;
 }
 
-#battery.charging, #battery.plugged {
-    color: #ffffff;
-    background-color: #171717;
+#pulseaudio {
+    padding: 0 10px 0 20px;
 }
 
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #000000;
-    }
+#pulseaudio.muted {
+    color: red;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
 }
 
 #battery.critical:not(.charging) {
@@ -107,69 +110,25 @@ window#waybar.hidden {
     animation-direction: alternate;
 }
 
+#network.disconnected {
+    color: red;
+}
+
+#clock {
+    border-radius: 0 20px 20px 0;
+    padding: 0 20px 0 10px;
+}
+
+
+
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
 label:focus {
     background-color: #000000;
 }
-
-#cpu {
-    background-color: #171717;
-    color: #ffffff;
-}
-
-#memory {
-    background-color: #171717;
-    color: #ffffff;
-}
-
-#disk {
-    background-color: #171717;
-    color: #ffffff;
-}
-
-#backlight {
-    background-color: #171717;
-}
-
-#network {
-    background-color: #171717;
-    color: #ffffff;
-}
-
-#network.disconnected {
-    background-color: #171717;
-    color: red;
-}
-
-#pulseaudio {
-    background-color: #171717;
-    color: #ffffff;
-    padding: 0 10px 0 20px;
-}
-
-#pulseaudio.muted {
-    background-color: #171717;
-    color: red;
-}
-
-#language {
-    background-color: #171717;
-    color: #ffffff;
-    border-radius: 20px 0 0 20px;
-    padding: 0 0 0 20px;
-}
-
-#temperature {
-    background-color: #171717;
-    color: #ffffff;
-}
-
-#temperature.critical {
-    background-color: #eb4d4b;
-}
-
-#language {
-    background-color: #171717;
-    color: #ffffff;
-    min-width: 16px;
-}
-
