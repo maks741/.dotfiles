@@ -27,7 +27,7 @@ window#waybar.hidden {
 
 
 #workspaces {
-    background-color: rgba(23, 23, 23, 0.85);
+    background-color: #171717;
     border-radius: 20px;
     font-size: 16px;
 }
@@ -59,7 +59,7 @@ window#waybar.hidden {
 
 
 .modules-right {
-    background-color: rgba(23, 23, 23, 0.85);
+    background-color: #171717;
     border-radius: 20px;
 }
 

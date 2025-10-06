@@ -1,11 +1,9 @@
+app:
+  spacing: 10
 wallpaper:
   resolution: '1280x720'
   height: 0.6
   unselectedBrightness: -0.5
-background:
-  resolution: '640x360'
-  brightness: -0.75
-  blur: 0
 clip:
   unselectedWidth: 0.15
   selectedWidth: 0.3
