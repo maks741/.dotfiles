@@ -34,7 +34,6 @@ window#waybar.hidden {
 
 #workspaces button {
     color: rgb(245, 245, 245);
-    background: none;
     padding: 0 10px 0 10px;
 }
 
@@ -59,8 +58,8 @@ window#waybar.hidden {
 
 
 
-.modules-right {
-    background-color: #171717;
+.modules-right { 
+    background: linear-gradient(to right, rgba(0, 4, 40, 0.75), rgba(0, 78, 146, 0.95));
     border-radius: 20px;
 }
 
