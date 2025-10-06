@@ -1,0 +1,12 @@
+app:
+  spacing: 10
+wallpaper:
+  resolution: '1280x720'
+  height: 0.6
+  unselectedBrightness: -0.5
+clip:
+  unselectedWidth: 0.15
+  selectedWidth: 0.3
+  arc: 35
+animation:
+  durationMillis: 100
