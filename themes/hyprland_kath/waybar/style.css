@@ -59,7 +59,7 @@ window#waybar.hidden {
 
 
 .modules-right { 
-    background: linear-gradient(to right, rgba(0, 4, 40, 0.75), rgba(0, 78, 146, 0.95));
+    background-color: #171717;
     border-radius: 20px;
 }
 
