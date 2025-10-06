@@ -1,0 +1,17 @@
+0. Install
+pacman -S zen-browser-bin
+
+1. Enable zen browser transparency:
+browser.tabs.allow_transparent_browser = true
+zen.widget.linux.transparency = true
+
+2. Enable transparent style on most websites:
+install 'Zen Internet' extension
+
+3. Make Ctrl + T open a blank tab (instead of triggering the search bar):
+zen.urlbar.replace-newtab = false
+then also set New Tab to 'Blank Page' in settings and enjoy
+
+
+Useful links:
+https://www.reddit.com/r/zen_browser/comments/1ky8rdp/arch_hyprland_zen_browser/

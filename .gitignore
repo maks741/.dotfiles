@@ -46,3 +46,7 @@ mwww/songs/**
 # theme picker
 !theme-picker/
 !theme-picker/**
+
+# zen browser
+!zen-browser/
+!zen-browser/**
