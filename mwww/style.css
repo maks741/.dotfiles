@@ -5,7 +5,7 @@
 }
 
 .widget {
-    -fx-background-color: rgba(23, 23, 23, 0.82);
+    -fx-background-color: #171717;
     -fx-background-radius: 20;
     -fx-alignment: center-left;
     -fx-spacing: 10px;

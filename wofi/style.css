@@ -1,8 +1,8 @@
-@define-color base rgb(40, 40, 40);
-@define-color text rgb(180, 180, 180);
-@define-color text-selected rgb(215, 215, 215);
-@define-color outline rgb(180, 180, 180);
-@define-color accent rgb(80, 80, 80);
+@define-color base rgb(24, 32, 56);           /* Deep navy base */
+@define-color text rgb(170, 180, 200);        /* Softer gray-blue text */
+@define-color text-selected rgb(225, 235, 255); /* Near-white, slightly cool tint */
+@define-color outline rgb(120, 140, 200);     /* Muted blue outline, softer than before */
+@define-color accent rgb(60, 80, 130);
 
 /* Font */
 * {
@@ -50,7 +50,7 @@ window {
   border: none;
   border-radius: 6px;
   color: @text-selected;
-  background-color: rgb(40, 40, 40); /* Slight contrast for input box */
+  background-color: @base;
 }
 
 #input image {
@@ -88,15 +88,4 @@ window {
 
 #entry:selected #text {
   color: @text-selected;
-}
-
-/* Hover (optional for better UX) */
-#entry:hover:not(:selected) {
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
-/* Drag/drop (rarely used) */
-#entry:drop(active) {
-  background-color: @outline !important;
-  color: @base;
 }
