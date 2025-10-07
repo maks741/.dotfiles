@@ -1,8 +1,8 @@
-@define-color base rgb(0, 0, 0); /* Pure black background */
-@define-color text rgb(200, 200, 200); /* Slight gray for unselected text */
-@define-color text-selected rgb(255, 255, 255); /* White for selected text */
-@define-color outline rgb(255, 255, 255); /* White outlines */
-@define-color accent rgb(100, 100, 100); /* Slight gray accent for hover or borders */
+@define-color base rgb(40, 40, 40);
+@define-color text rgb(180, 180, 180);
+@define-color text-selected rgb(215, 215, 215);
+@define-color outline rgb(180, 180, 180);
+@define-color accent rgb(80, 80, 80);
 
 /* Font */
 * {
@@ -50,7 +50,7 @@ window {
   border: none;
   border-radius: 6px;
   color: @text-selected;
-  background-color: @base;
+  background-color: rgb(40, 40, 40); /* Slight contrast for input box */
 }
 
 #input image {
@@ -58,6 +58,7 @@ window {
   color: @text-selected;
 }
 
+/* Removes the border around input on focus */
 #input:focus {
   box-shadow: none;
 }
@@ -91,7 +92,7 @@ window {
 
 /* Hover (optional for better UX) */
 #entry:hover:not(:selected) {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 /* Drag/drop (rarely used) */
