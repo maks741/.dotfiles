@@ -93,4 +93,5 @@ echo "Cleaning up..."
 mv "./output.wav" "./media.wav"
 
 
+echo "Downloaded song name: $_yt_dlp_dir_name"
 echo "Done"
