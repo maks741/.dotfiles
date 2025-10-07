@@ -2,11 +2,13 @@ app:
   spacing: 10
 wallpaper:
   resolution: '1280x720'
-  height: 0.6
   unselectedBrightness: -0.5
+  selectedBorderColor: 'rgb(220, 220, 220)'
 clip:
   unselectedWidth: 0.15
   selectedWidth: 0.3
+  unselectedHeight: 0.55
+  selectedHeight: 0.6
   arc: 35
 animation:
   durationMillis: 100
