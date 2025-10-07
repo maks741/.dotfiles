@@ -1,11 +1,10 @@
-@define-color	base rgb(30, 30, 46);
-@define-color	text rgb(205, 214, 244);
-@define-color	red rgb(243, 139, 168);
+@define-color base rgb(30, 30, 46);
+@define-color text rgb(205, 214, 244);
+@define-color text-selected rgb(203, 166, 247);
+@define-color outline rgb(180, 190, 254);
+@define-color accent rgb(60, 60, 80);
 
-@define-color	lavender rgb(180, 190, 254);
-@define-color	mauve rgb(203, 166, 247);
-
-
+/* Font */
 * {
   font-family: 'CaskaydiaCove Nerd Font', monospace;
   font-size: 18px;
@@ -15,7 +14,7 @@
 window {
   margin: 0px;
   padding: 10px;
-  border: 2px solid @lavender;
+  border: 2px solid @outline;
   border-radius: 8px;
   background-color: @base;
 }
@@ -49,21 +48,22 @@ window {
   margin: 5px 20px;
   padding: 10px;
   border: none;
-  border-radius: 0.1em;
-  color: @text;
+  border-radius: 6px;
+  color: @text-selected;
   background-color: @base;
 }
 
 #input image {
-    border: none;
-    color: @red;
+  border: none;
+  color: rgb(243, 139, 168);
 }
 
-#input * {
-  outline: 4px solid @red!important;
+/* Removes the border around input on focus */
+#input:focus {
+  box-shadow: none;
 }
 
-/* Text */
+/* Text Entries */
 #text {
   margin: 5px;
   border: none;
@@ -72,22 +72,20 @@ window {
 
 #entry {
   background-color: @base;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-#entry arrow {
-  border: none;
-  color: @lavender;
+/* Unselected entries */
+#entry #text {
+  color: @text;
 }
 
-/* Selected Entry */
+/* Selected entry */
 #entry:selected {
-  border: 0.11em solid @lavender;
+  border: 1px solid @outline;
 }
 
 #entry:selected #text {
-  color: @mauve;
-}
-
-#entry:drop(active) {
-  background-color: @lavender!important;
+  color: @text-selected;
 }

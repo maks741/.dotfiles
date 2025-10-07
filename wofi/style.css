@@ -1,8 +1,8 @@
-@define-color base rgb(24, 32, 56);           /* Deep navy base */
-@define-color text rgb(170, 180, 200);        /* Softer gray-blue text */
-@define-color text-selected rgb(225, 235, 255); /* Near-white, slightly cool tint */
-@define-color outline rgb(120, 140, 200);     /* Muted blue outline, softer than before */
-@define-color accent rgb(60, 80, 130);
+@define-color base rgb(0, 0, 0);
+@define-color text rgb(200, 200, 200);
+@define-color text-selected rgb(255, 255, 255);
+@define-color outline rgb(255, 255, 255);
+@define-color accent rgb(100, 100, 100);
 
 /* Font */
 * {

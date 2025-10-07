@@ -89,14 +89,3 @@ window {
 #entry:selected #text {
   color: @text-selected;
 }
-
-/* Hover (optional for better UX) */
-#entry:hover:not(:selected) {
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
-/* Drag/drop (rarely used) */
-#entry:drop(active) {
-  background-color: @outline !important;
-  color: @base;
-}
