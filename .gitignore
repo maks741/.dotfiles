@@ -56,3 +56,6 @@ mwww/songs/**
 # git setup
 !git/
 !git/**
+
+# readme
+!README.md
