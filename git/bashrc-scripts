@@ -1,0 +1,42 @@
+###
+### Git
+###
+
+alias g='git'
+
+# git script that allows to refer to branches by 'in' syntax where:
+# 'i' is prefix of number that is going to be parsed by the script
+# n is the index of the target branch in the output of 'git branch'
+git() {
+    local modified_args=()
+    
+    for arg in "$@"; do
+        # Check if argument matches "i<number>" pattern
+        if [[ $arg =~ ^i([0-9]+)$ ]]; then
+            local branch_num="${BASH_REMATCH[1]}"
+            # Add 1 to branch_num since sed -n uses 1-based indexing
+            local sed_line=$((branch_num + 1))
+            local branch_name=$(command git branch | sed -n "${sed_line}p" | sed 's/^[ *]*//')
+            if [ -n "$branch_name" ]; then
+                modified_args+=("$branch_name")
+            else
+                echo "Branch number $branch_num not found"
+                return 1
+            fi
+        else
+            modified_args+=("$arg")
+        fi
+    done
+    
+    command git "${modified_args[@]}"
+}
+
+# Alias to show numbered branches
+gb() {
+    local i=0
+    git branch --color=always | while IFS= read -r line; do
+        printf "%6d %s\n" "$i" "$line"
+        ((i++))
+    done
+}
+

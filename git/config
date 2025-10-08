@@ -1,0 +1,40 @@
+[user]
+	email =
+	name =
+[pager]
+	branch = false
+	log = false
+	diff = false
+	show = false
+	reflog = false
+	config = false
+	rev-list = false
+	grep = false
+[core]
+	editor = nvim
+[pull]
+	rebase = false
+[alias]
+  	s = status
+  	a = add .
+  	ll = log --oneline -n
+  	cm = commit -m
+  	d = diff
+  	ds = diff --staged
+  	gl = config --global -l
+  	f = !git rev-list --all | xargs git grep -F
+  	b = branch
+  	bs = switch
+  	bsc = switch -c
+  	bd = branch -d
+  	bD = branch -D
+  	ph = push
+  	pl = pull
+  	ft = fetch
+  	mg = merge
+  	rb = rebase
+  	aamend = commit -a --amend --no-edit
+  	amend = commit --amend --no-edit
+  	rh = reset --hard HEAD
+  	ch = checkout HEAD
+
