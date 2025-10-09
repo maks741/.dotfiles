@@ -32,7 +32,19 @@
     -fx-cursor: hand;
 }
 
-.song-name {
+.dynamic-label {
+    -fx-alignment: center-left;
+}
+
+.dynamic-label Label {
+    -fx-text-fill: rgb(230, 230, 230);
+    -fx-font-family: Verdana;
+    -fx-font-size: 17px;
+}
+
+.dynamic-label TextField {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
     -fx-text-fill: rgb(230, 230, 230);
     -fx-font-family: Verdana;
     -fx-font-size: 17px;
