@@ -57,5 +57,13 @@ mwww/songs/**
 !git/
 !git/**
 
+# cava (audio visualizer)
+!cava/
+!cava/**
+
+# tmux (terminal multiplexer)
+!tmux/
+!tmux/**
+
 # readme
 !README.md
