@@ -41,78 +41,67 @@ for file in "${REQUIRED_FILES[@]}"; do
     fi
 done
 
-echo "All required files exist for theme '$THEME'."
-
 
 # Copy all theme files to corresponding files in ~/.config
 CONFIG_DIR="$HOME/.config"
 
-echo "Changing wallpaper..."
+swww img "$THEME_DIR/wallpaper" --transition-fps 60 --transition-step 255 --transition-duration 1.5 --transition-type wipe &
+
+# sleep for swww to run smoothly
+# otherwise swww may lag, probably because other part of the script is CPU-bound and interferes with swww animation render
+# first, we wait for swww img process to finish (which exits as soon as it sends the command to the daemon)
+# then, we also sleep for duration equal to {swww --transition-duration} + small delta to be sure the new wallpaper is fully rendered
+
+swww_pid=$!
+wait $swww_pid
+sleep 1.75
+
+
 cp "$THEME_DIR/wallpaper" "$CONFIG_DIR/wallpapers/current"
-RAND=$(( RANDOM % 2 ))
-case $RAND in
-    0)
-        swww img "$THEME_DIR/wallpaper" --transition-fps 60 --transition-step 255 --transition-duration 2.25 --transition-type wipe
-        ;;
-    1)
-        swww img "$THEME_DIR/wallpaper" --transition-fps 60 --transition-step 255 --transition-duration 2.25 --transition-type any
-        ;;
-esac
 echo "wallpaper changed"
 
 
-echo "Applying hyprland conf..."
 cp "$THEME_DIR/hypr/hyprland.conf" "$CONFIG_DIR/hypr/hyprland.conf"
 echo "hyprland conf applied"
 
 
-echo "Applying kitty conf..."
 cp "$THEME_DIR/kitty/current-theme.conf" "$CONFIG_DIR/kitty/current-theme.conf"
 cp "$THEME_DIR/kitty/kitty.conf" "$CONFIG_DIR/kitty/kitty.conf"
 kill -SIGUSR1 $(pgrep kitty)
 echo "kitty conf applied"
 
 
-echo "Applying mwww conf..."
 cp "$THEME_DIR/mwww/config.yaml" "$CONFIG_DIR/mwww/config.yaml"
 cp "$THEME_DIR/mwww/style.css" "$CONFIG_DIR/mwww/style.css"
 mwww reload-config
 mwww reload-style
+mwww show
 echo "mwww conf applied"
 
 
-echo "Applying waybar conf..."
 cp "$THEME_DIR/waybar/style.css" "$CONFIG_DIR/waybar/style.css"
 killall waybar 2>/dev/null
 waybar &
 echo "waybar conf applied"
 
 
-echo "Applying cava conf..."
 cp "$THEME_DIR/cava/config" "$CONFIG_DIR/cava/config"
 kill -SIGUSR2 $(pgrep cava)
 echo "cava conf applied"
 
 
-echo "Applying wofi conf..."
 cp "$THEME_DIR/wofi/style.css" "$CONFIG_DIR/wofi/style.css"
 echo "wofi conf applied"
 
 
-echo "Applying starship conf..."
 cp "$THEME_DIR/starship.toml" "$CONFIG_DIR/starship.toml"
 echo "starship conf applied"
 
 
-echo "Applying theme picker conf..."
 cp "$THEME_DIR/theme-picker/config.yaml" "$CONFIG_DIR/theme-picker/config.yaml"
 echo "theme picker conf applied"
 
 
-echo "Applying hyprlock conf..."
 cp "$THEME_DIR/hypr/hyprlock/avatar" "$CONFIG_DIR/hypr/hyprlock/avatar"
 cp "$THEME_DIR/hypr/hyprlock.conf" "$CONFIG_DIR/hypr/hyprlock.conf"
 echo "hyprlock conf applied"
-
-
-echo "DONE"
