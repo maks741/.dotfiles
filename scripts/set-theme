@@ -76,8 +76,8 @@ echo "mwww conf applied"
 
 
 cp "$THEME_DIR/waybar/style.css" "$CONFIG_DIR/waybar/style.css"
-killall waybar 2>/dev/null
-waybar &
+kill -SIGUSR2 $(pgrep waybar) # reload config
+kill -SIGUSR1 $(pgrep waybar) # trigger show-hide
 echo "waybar conf applied"
 
 
