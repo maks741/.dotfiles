@@ -57,10 +57,6 @@ wait $swww_pid
 sleep 2.50
 
 
-cp "$THEME_DIR/wallpaper" "$CONFIG_DIR/wallpapers/current"
-echo "wallpaper changed"
-
-
 cp "$THEME_DIR/hypr/hyprland.conf" "$CONFIG_DIR/hypr/hyprland.conf"
 echo "hyprland conf applied"
 
