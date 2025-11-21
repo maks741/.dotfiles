@@ -9,17 +9,7 @@ $directory\
 [](fg:peach bg:green)\
 $git_branch\
 $git_status\
-[](fg:green bg:teal)\
-$c\
-$rust\
-$golang\
-$nodejs\
-$php\
-$java\
-$kotlin\
-$haskell\
-$python\
-[ ](fg:teal)\
+[ ](fg:green)\
 $line_break$character"""
 
 palette = 'catppuccin_mocha'
