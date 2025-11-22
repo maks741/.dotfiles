@@ -1,0 +1,115 @@
+#!/bin/bash
+
+SOCK="$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock"
+
+dummy_window_class="mwww-dummy-unfocus"
+mwww_daemon_title="mwww-daemon"
+
+dummy_window_pid=""
+current_workspace=$(hyprctl activeworkspace -j | jq '.id')
+
+get_window_titles_on_workspace() {
+    hyprctl -j clients | jq -r ".[] | select(.workspace.id == $1) | .title"
+}
+
+spawn_dummy() {
+    if [[ -n "$dummy_window_pid" ]]; then
+	return 1
+    fi
+
+    kitty \
+        --config=/dev/null \
+	--class $dummy_window_class \
+        --override 'disable_ligatures always' \
+        --override 'scrollback_lines 0' \
+        --override 'font_family monospace' \
+        --override 'font_size 8' \
+        --override 'allow_remote_control no' \
+        --override 'background_opacity 0' \
+        --override 'hide_window_decorations yes' \
+	bash -c "sleep infinity" &
+    pid=$!
+    dummy_window_pid=$pid
+}
+
+kill_dummy() {
+    if [[ -n "$dummy_window_pid" ]]; then
+        kill "$dummy_window_pid" 2>/dev/null
+        dummy_window_pid=""
+    fi
+}
+
+only_mwww_daemon_on_workspace() {
+    workspace="$1"
+    window_titles=($(get_window_titles_on_workspace "$workspace"))
+
+    # no windows at all → return false
+    if [[ ${#window_titles[@]} -eq 0 ]]; then
+        return 1
+    fi
+
+    # only mwww-daemon → return true
+    if [[ ${#window_titles[@]} -eq 1 && "${window_titles[0]}" == $mwww_daemon_title ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
+socat - UNIX-CONNECT:"$SOCK" | while read -r line; do
+    case "$line" in
+	# workspace change
+	workspace\>*)
+	    new_workspace="${line#workspace>>}"
+
+            kill_dummy
+
+            if only_mwww_daemon_on_workspace "$new_workspace"; then
+                spawn_dummy
+            fi
+
+            current_workspace="$new_workspace"
+            ;;
+	# focus change
+	activewindow\>*)
+	    focused_window="${line#activewindow>>}"
+
+	    # if the focus is switched to mwww-daemon and it is the only window in the workspace
+	    # (which may happen if we closed a window and now only mwww-daemon is left)
+	    # then spawn dummy window again
+	    if [[ $focused_window == *"$mwww_daemon_title"* ]] && only_mwww_daemon_on_workspace "$current_workspace"; then
+		spawn_dummy
+	    fi
+
+	    # TODO: REMOVE REDUNDANT LOGIC
+	    # if any other window but mwww-daemon (and the dummy window itself) is focused, kill the dummy window
+	    # this includes new windows popping up
+	    if [[ $focused_window != *"$dummy_window_class"* && $focused_window != *"$mwww_daemon_title"* ]]; then
+		kill_dummy
+	    fi
+	    ;;
+	# layer opening
+	openlayer\>*)
+	    opened_layer="${line#openlayer>>}"
+	    
+	    # kill dummy window as soon as wofi is opened
+	    # this way by the time an app is laucnhed there will be no dummy window
+	    # 
+	    # without this logic, the dummy window would be closed only a moment after
+	    # the app is launched, thus the app's launch behavior is affected
+	    if [[ $opened_layer == "wofi" ]]; then
+	        kill_dummy
+	    fi
+	    ;;
+	# layer closing
+	closelayer\>*)
+	    closed_layer="${line#closelayer>>}"
+
+	    # spawn dummy window in case we close wofi without launching a window
+	    if [[ $closed_layer == "wofi" ]] && only_mwww_daemon_on_workspace "$current_workspace"; then
+		spawn_dummy
+	    fi
+	    ;;
+    esac
+done
+
