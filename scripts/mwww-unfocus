@@ -6,6 +6,7 @@ dummy_window_class="mwww-dummy-unfocus"
 mwww_daemon_title="mwww-daemon"
 
 dummy_window_pid=""
+dummy_window_address=""
 current_workspace=$(hyprctl activeworkspace -j | jq '.id')
 
 get_window_titles_on_workspace() {
@@ -70,38 +71,53 @@ socat - UNIX-CONNECT:"$SOCK" | while read -r line; do
 
             current_workspace="$new_workspace"
             ;;
-	# focus change
-	activewindow\>*)
-	    focused_window="${line#activewindow>>}"
+	# window close
+	closewindow\>*)
+	    closed_window_address="${line#closewindow>>}"
 
-	    # if the focus is switched to mwww-daemon and it is the only window in the workspace
-	    # (which may happen if we closed a window and now only mwww-daemon is left)
-	    # then spawn dummy window again
-	    if [[ $focused_window == *"$mwww_daemon_title"* ]] && only_mwww_daemon_on_workspace "$current_workspace"; then
+	    # after a window is closed check whether mwww-daemon is the only window left in the workspace
+	    # and if so spawn the dummy window
+	    if [[ $closed_window_address != $dummy_window_address ]] && only_mwww_daemon_on_workspace "$current_workspace"; then
 		spawn_dummy
 	    fi
+	    ;;
+	# window open
+	openwindow\>*)
+	    opened_window="${line#openwindow>>}"
 
-	    # TODO: REMOVE REDUNDANT LOGIC
-	    # if any other window but mwww-daemon (and the dummy window itself) is focused, kill the dummy window
-	    # this includes new windows popping up
-	    if [[ $focused_window != *"$dummy_window_class"* && $focused_window != *"$mwww_daemon_title"* ]]; then
-		kill_dummy
+	    if [[ $opened_window == *"$dummy_window_class"* ]]; then
+		is_dummy=true
+	    else
+		is_dummy=false
+	    fi
+
+	    if [[ "$is_dummy" == true ]]; then
+		dummy_window_address=$(hyprctl -j clients | jq -r ".[] | select(.class == \"$dummy_window_class\") | .address")
+		# strip the address from 0xabc123 to just abc123
+		# needed to match format of 'closed_window_address' from closewindow event
+		dummy_window_address=${dummy_window_address#0x}
+	    fi
+
+	    # if opened window is not the dummy window itself nor mwww-daemon
+	    # then close our dummy window
+	    if [[ "$is_dummy" == false && $opened_window != *"$mwww_daemon_title"* ]]; then
+	        kill_dummy
 	    fi
 	    ;;
-	# layer opening
+	# layer open
 	openlayer\>*)
 	    opened_layer="${line#openlayer>>}"
 	    
 	    # kill dummy window as soon as wofi is opened
-	    # this way by the time an app is laucnhed there will be no dummy window
+	    # this way by the time an app is launched there will be no dummy window
 	    # 
 	    # without this logic, the dummy window would be closed only a moment after
-	    # the app is launched, thus the app's launch behavior is affected
+	    # the app is launched, thus the app's launch behavior would get affected
 	    if [[ $opened_layer == "wofi" ]]; then
 	        kill_dummy
 	    fi
 	    ;;
-	# layer closing
+	# layer close
 	closelayer\>*)
 	    closed_layer="${line#closelayer>>}"
 
