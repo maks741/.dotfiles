@@ -1,5 +1,6 @@
 #!/bin/bash
 
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 SOCK="$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock"
 
 dummy_window_class="mwww-dummy-unfocus"
@@ -18,7 +19,7 @@ spawn_dummy() {
 	return 1
     fi
 
-    ./wayland-client/client &
+    $SCRIPT_DIR/wayland-client/client &
 
     pid=$!
     dummy_window_pid=$pid

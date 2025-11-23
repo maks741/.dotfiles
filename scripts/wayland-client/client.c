@@ -197,9 +197,10 @@ main(int argc, char *argv[])
             state.xdg_wm_base, state.wl_surface);
     xdg_surface_add_listener(state.xdg_surface, &xdg_surface_listener, &state);
     state.xdg_toplevel = xdg_surface_get_toplevel(state.xdg_surface);
-    xdg_toplevel_set_title(state.xdg_toplevel, "mwww-dummy-unfocusABOBA");
-    xdg_toplevel_set_app_id(state.xdg_toplevel, "mwww-dummy-unfocusABOBA");
-    xdg_toplevel_set_fullscreen(state.xdg_toplevel, NULL);
+    xdg_toplevel_set_title(state.xdg_toplevel, "mwww-dummy-unfocus");
+    xdg_toplevel_set_app_id(state.xdg_toplevel, "mwww-dummy-unfocus");
+    xdg_toplevel_set_min_size(state.xdg_toplevel, 1920, 1200);
+    xdg_toplevel_set_max_size(state.xdg_toplevel, 1920, 1200);
     wl_surface_commit(state.wl_surface);
 
     while (wl_display_dispatch(state.wl_display)) {
