@@ -18,17 +18,8 @@ spawn_dummy() {
 	return 1
     fi
 
-    kitty \
-        --config=/dev/null \
-	--class $dummy_window_class \
-        --override 'disable_ligatures always' \
-        --override 'scrollback_lines 0' \
-        --override 'font_family monospace' \
-        --override 'font_size 8' \
-        --override 'allow_remote_control no' \
-        --override 'background_opacity 0' \
-        --override 'hide_window_decorations yes' \
-	bash -c "sleep infinity" &
+    ./wayland-client/client &
+
     pid=$!
     dummy_window_pid=$pid
 }
