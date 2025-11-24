@@ -1,0 +1,40 @@
+### Manually installing Linux Desktop Gremlins
+
+1. Go to the GitHub repo
+https://github.com/iluvgirlswithglasses/linux-desktop-gremlin
+
+2. Clone the repo
+git clone https://github.com/iluvgirlswithglasses/linux-desktop-gremlin ~/.config/linux-desktop-gremlin
+cd ~/.config/linux-desktop-gremlin
+
+3. Install dependencies (without using 'uv' but with good old pip)
+python -m venv .venv
+source ./.venv/bin/activate
+./.venv/bin/pip3.13 install .
+
+4. Install rofi
+pacman -S rofi
+
+5. Create a .desktop file
+already done - gremlin_picker.desktop
+may need to adjust the paths in the file
+
+6. chmod the .desktop file
+chmod 644 ./gremlin_picker.desktop
+
+7. Make gremlin-picker script executable
+chmod +x ./scripts/gremlin-picker.sh
+
+8. Symlink the desktop file to a proper location (may need to adjust the symlink location based on where your .desktop files are located)
+ln -s /home/maks/.config/linux-desktop-gremlin/gremlin_picker.desktop /usr/share/applications/gremlin_picker.desktop
+
+9. Extend ./scripts/gremlin-picker.sh to activate the virtual env
+add this line after the 'Exit' check is passed and before './run.sh "$pick"' is called
+source ./.venv/bin/activate
+
+10. Delete .git dir
+in order for the main repo in ~/.config to not warn me about ~/.config/linux-desktop-gremlin being another Git repo and suggesting to use submodules, simply delete the .git dir
+rm -rf ./.git
+rm ./.gitignore
+rm README.md
+

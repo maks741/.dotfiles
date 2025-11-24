@@ -1,0 +1,11 @@
+### Manually uninstalling Linux Desktop Gremlins
+
+1. Remove symlinks
+rm /usr/share/applications/gremlin_picker.desktop
+
+2. Uninstall rofi and its dependencies (in case you don't start using rofi for anything else)
+pacman -Rs startup-notification-0.12-9  xcb-imdkit-1.0.9-1  rofi-2.0.0-1
+
+3. Remove the repo, including virtual env and desktop file
+rm -rf ~/.config/linux-desktop-gremlin
+

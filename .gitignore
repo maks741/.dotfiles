@@ -65,5 +65,11 @@ mwww/songs/**
 !tmux/
 !tmux/**
 
+# linux-desktop-gremlin
+!/linux-desktop-gremlin/
+!/linux-desktop-gremlin/manual_install.txt
+!/linux-desktop-gremlin/manual_uninstall.txt
+!/linux-desktop-gremlin/gremlin_picker.desktop
+
 # readme
 !README.md
