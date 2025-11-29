@@ -97,4 +97,3 @@ cp "$THEME_DIR/hypr/hyprlock/avatar" "$CONFIG_DIR/hypr/hyprlock/avatar"
 cp "$THEME_DIR/hypr/hyprlock.conf" "$CONFIG_DIR/hypr/hyprlock.conf"
 echo "hyprlock conf applied"
 
-topbarm reload-and-show
