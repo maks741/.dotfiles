@@ -69,15 +69,10 @@ echo "kitty conf applied"
 
 cp "$THEME_DIR/mwww/config.yaml" "$CONFIG_DIR/mwww/config.yaml"
 cp "$THEME_DIR/mwww/style.css" "$CONFIG_DIR/mwww/style.css"
-mwww reload-config
-mwww reload-style
-mwww show
 echo "mwww conf applied"
 
 
 cp "$THEME_DIR/waybar/style.css" "$CONFIG_DIR/waybar/style.css"
-kill -SIGUSR2 $(pgrep waybar) # reload config
-kill -SIGUSR1 $(pgrep waybar) # trigger show-hide
 echo "waybar conf applied"
 
 
@@ -101,3 +96,5 @@ echo "theme picker conf applied"
 cp "$THEME_DIR/hypr/hyprlock/avatar" "$CONFIG_DIR/hypr/hyprlock/avatar"
 cp "$THEME_DIR/hypr/hyprlock.conf" "$CONFIG_DIR/hypr/hyprlock.conf"
 echo "hyprlock conf applied"
+
+topbarm reload-and-show

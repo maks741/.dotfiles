@@ -1,0 +1,73 @@
+#!/bin/bash
+
+### Domain ###
+### Topbar - a combination of waybar and mwww-daemon
+
+STATE_FILE_DIR="$HOME/.cache/topbarm"
+STATE_FILE="$STATE_FILE_DIR/state"
+
+mwww_daemon_title="mwww-daemon"
+mwww_dummy_unfocus_title="mwww-dummy-unfocus"
+
+STATES=(OPEN HIDDEN)
+for i in "${!STATES[@]}"; do
+    name=${STATES[i]}
+    declare -r "${name}"="$i" # Create a read-only variable with the name and its index
+done
+
+if [ ! -f "$STATE_FILE" ]; then
+    mkdir "$STATE_FILE_DIR" 2>/dev/null
+    touch "$STATE_FILE"
+    echo "$OPEN" > "$STATE_FILE"
+fi
+
+
+get_window_titles_on_workspace() {
+    hyprctl -j clients | jq -r ".[] | select(.workspace.id == $1) | .title"
+}
+
+only_mwww_daemon_on_current_workspace() {
+    current_workspace=$(hyprctl activeworkspace -j | jq '.id')
+    window_titles=($(get_window_titles_on_workspace "$current_workspace"))
+
+    # no windows at all → return false
+    if [[ ${#window_titles[@]} -eq 0 ]]; then
+        return 1
+    fi
+
+    # only mwww-daemon & mwww-dummy-unfocus → return true
+    if [[ ${#window_titles[@]} -eq 2 && "${window_titles[0]}" == "$mwww_daemon_title" && "${window_titles[1]}" == "$mwww_dummy_unfocus_title" ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
+
+case "$1" in
+    # hides topbar if current workspace is 'empty' (only mwww-daemon is open)
+    hide-if-empty)
+      if [[ $(cat $STATE_FILE) == "$OPEN" ]] && only_mwww_daemon_on_current_workspace; then
+          mwww hide &
+          killall -SIGUSR1 waybar & # trigger show-hide
+          echo "$HIDDEN" > "$STATE_FILE"
+      fi
+      ;;
+    reload-and-show)
+      mwww reload-config &
+      mwww reload-style &
+
+      kill -SIGUSR2 $(pgrep waybar) # reload config
+
+      if [[ $(cat $STATE_FILE) == "$HIDDEN" ]]; then
+	  mwww show &
+	  kill -SIGUSR1 $(pgrep waybar) & # trigger show-hide
+	  echo "$OPEN" > "$STATE_FILE"
+      fi
+      ;;
+    *)
+      echo "Usage: topbarm { hide-if-empty | reload-and-show }"
+      exit 1
+      ;;
+esac
+
