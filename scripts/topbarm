@@ -29,14 +29,20 @@ get_window_titles_on_workspace() {
 only_mwww_daemon_on_current_workspace() {
     current_workspace=$(hyprctl activeworkspace -j | jq '.id')
     window_titles=($(get_window_titles_on_workspace "$current_workspace"))
+    window_count="${#window_titles[@]}"
 
     # no windows at all → return false
-    if [[ ${#window_titles[@]} -eq 0 ]]; then
+    if [[ "$window_count" -eq 0 ]]; then
         return 1
     fi
 
+    # only mwww-daemon → return true
+    if [[ "$window_count" -eq 1 && "${window_titles[0]}" == "$mwww_daemon_title" ]]; then
+        return 0
+    fi
+
     # only mwww-daemon & mwww-dummy-unfocus → return true
-    if [[ ${#window_titles[@]} -eq 2 && "${window_titles[0]}" == "$mwww_daemon_title" && "${window_titles[1]}" == "$mwww_dummy_unfocus_title" ]]; then
+    if [[ "$window_count" -eq 2 && "${window_titles[0]}" == "$mwww_daemon_title" && "${window_titles[1]}" == "$mwww_dummy_unfocus_title" ]]; then
         return 0
     fi
 
@@ -56,7 +62,6 @@ case "$1" in
     reload-and-show)
       mwww reload-config &
       mwww reload-style &
-
       kill -SIGUSR2 $(pgrep waybar) # reload config
 
       if [[ $(cat $STATE_FILE) == "$HIDDEN" ]]; then
