@@ -5,7 +5,7 @@
 THEME="$1"
 if [ -z "$THEME" ]; then
     echo "Usage: set-theme '<theme>'"
-    exit 1
+    exit 0
 fi
 
 
