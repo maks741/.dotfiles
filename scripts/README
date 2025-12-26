@@ -1,6 +1,7 @@
 ###
 ### General
 ###
+
 # In order for scripts to be accessible globally, export this dir to $PATH:
 export PATH=$HOME/.config/scripts:$PATH
 
@@ -12,6 +13,20 @@ chmod +x {script}
 ### Brightness
 ###
 
-# In order for brightness scripts to work, add the following line to
-/etc/rc.local:
-sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
+# In order for brightness scripts to work:
+1. Create a systemd service that runs on startup:
+---------------------------------------------------
+/etc/systemd/system/brightness.service
+---------------------------------------------------
+[Unit]
+Description=Brightness
+
+[Service]
+Type=oneshot
+ExecStart=sudo chmod o+w /sys/class/backlight/intel_backlight/brightness
+
+[Install]
+WantedBy=multi-user.target
+---------------------------------------------------
+2. Enable the service
+sudo systemctl enable brightness
