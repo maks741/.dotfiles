@@ -16,6 +16,7 @@
 !mwww/
 !mwww/**
 mwww/commands.fifo
+mwww/creds.json
 mwww/songs/**
 
 # themes

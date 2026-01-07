@@ -15,24 +15,16 @@ case "$1" in
   reload-config)
     echo "reload-config" > "$FIFO"
     ;;
-  set)
+  context)
     if [ -z "$2" ]; then
-      echo "Error: Missing value for 'set' command."
-      echo "Usage: $0 set 'song name'"
+      echo "Error: Missing value for 'context' command."
+      echo "Usage: $0 context ['local', 'spotify']"
       exit 1
     fi
-    echo "set:$2" > "$FIFO"
-    ;;
-  skip-duration)
-    if [ -z "$2" ]; then
-      echo "Error: Missing value for 'skip-duration' command."
-      echo "Usage: $0 skip-duration 'duration in seconds'"
-      exit 1
-    fi
-    echo "skip-duration:$2" > "$FIFO"
+    echo "context:$2" > "$FIFO"
     ;;
   *)
-	  echo "Usage: mwww { hide | show | reload-style | reload-config | set <song name> | skip-duration <duration in seconds> }"
+	  echo "Usage: mwww { hide | show | reload-style | reload-config | context ['local', 'spotify'] }"
     exit 1
     ;;
 esac
