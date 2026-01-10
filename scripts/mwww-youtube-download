@@ -8,9 +8,9 @@ fi
 
 
 # Check if download dir exists and create one if not
-BASE_DIR="$HOME/.config/mwww/songs/"
+BASE_DIR="$HOME/.config/mwww/local-tracks/"
 if [ ! -d "$BASE_DIR" ]; then
-    echo "Directory '~/.config/mwww/songs' does not exist. Creating..."
+    echo "Directory '~/.config/mwww/local-tracks' does not exist. Creating..."
     mkdir -p "$BASE_DIR" || {
         echo "Error: Could not create $BASE_DIR"
         exit 1
@@ -93,5 +93,5 @@ echo "Cleaning up..."
 mv "./output.wav" "./media.wav"
 
 
-echo "Downloaded song name: $_yt_dlp_dir_name"
+echo "Downloaded track name: $_yt_dlp_dir_name"
 echo "Done"
