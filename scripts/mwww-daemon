@@ -1,1 +1,1 @@
-/usr/lib/jvm/java-25-openjdk/bin/java -Xms4m -Xmx32m -XX:+UseSerialGC -jar ~/.config/scripts/mwww-daemon.jar
+~/me/programming/pet/mwww-daemon/code/frontend/target/image/bin/launch
