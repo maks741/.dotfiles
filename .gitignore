@@ -17,6 +17,7 @@
 !mwww/**
 mwww/commands.fifo
 mwww/creds.json
+mwww/config.json
 mwww/local-tracks/**
 
 # themes

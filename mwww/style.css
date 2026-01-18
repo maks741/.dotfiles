@@ -5,18 +5,14 @@
 }
 
 .widget {
-    -fx-background-color: black;
-    -fx-background-radius: 20px;
-    -fx-border-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-width: 1px;
-    -fx-border-color: rgb(50, 50, 50);
+    -fx-background-color: #171717;
+    -fx-background-radius: 20;
     -fx-alignment: center-left;
     -fx-spacing: 10px;
     -fx-padding: 0 25px 0 20px;
 }
 
-.song-avatar {
+.thumbnail {
     -fx-alignment: center;
     -fx-min-width: 36px;
     -fx-pref-width: 36px;
@@ -26,23 +22,23 @@
     -fx-max-height: 36px;
 }
 
-.song-avatar:hover {
+.thumbnail:hover {
     -fx-background-color: rgb(60, 60, 60);
     -fx-background-radius: 180;
     -fx-cursor: hand;
 }
 
-.dynamic-label {
+.search-field {
     -fx-alignment: center-left;
 }
 
-.dynamic-label Label {
+.search-field Label {
     -fx-text-fill: rgb(230, 230, 230);
     -fx-font-family: Verdana;
     -fx-font-size: 17px;
 }
 
-.dynamic-label TextField {
+.search-field TextField {
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-text-fill: rgb(230, 230, 230);

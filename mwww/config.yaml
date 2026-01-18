@@ -1,9 +1,0 @@
-spotify:
-  # The Spotify URI of a resource to open on startup
-  openOnStartupUri: 'spotify:playlist:4PKRumbJb3aUG4RVLDw7ax'
-  # The Spotify ID of a 'home' playlist
-  # The tracks that you add will be added to this playlist
-  playlistId: '4PKRumbJb3aUG4RVLDw7ax'
-  clientId: 'd42ee672a2a74a0c8d0debe6e2e00a8c'
-  redirectUri: 'http://127.0.0.1:8080/callback'
-
