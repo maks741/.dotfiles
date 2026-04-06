@@ -1,4 +1,4 @@
 #!/bin/bash
 
-new_theme=$(/usr/lib/jvm/java-25-openjdk/bin/java -Xms128m -Xmx256m -XX:+UseSerialGC -jar ~/.config/scripts/theme-picker.jar)
+new_theme=$(/usr/lib/jvm/java-26-openjdk/bin/java -Xms128m -Xmx256m -XX:+UseSerialGC -jar ~/.config/scripts/theme-picker.jar)
 echo "$new_theme"

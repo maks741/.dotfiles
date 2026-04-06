@@ -44,15 +44,15 @@ done
 # Copy all theme files to corresponding files in ~/.config
 CONFIG_DIR="$HOME/.config"
 
-swww img "$THEME_DIR/wallpaper" --transition-fps 60 --transition-step 255 --transition-duration 2.25 --transition-type wipe &
+awww img "$THEME_DIR/wallpaper" --transition-fps 60 --transition-step 255 --transition-duration 2.25 --transition-type wipe &
 
-# sleep for swww to run smoothly
-# otherwise swww may lag, probably because other part of the script is CPU-bound and interferes with swww animation render
-# first, we wait for swww img process to finish (which exits as soon as it sends the command to the daemon)
-# then, we also sleep for duration equal to {swww --transition-duration} + small delta to be sure the new wallpaper is fully rendered
+# sleep for awww to run smoothly
+# otherwise awww may lag, probably because other part of the script is CPU-bound and interferes with awww animation render
+# first, we wait for awww img process to finish (which exits as soon as it sends the command to the daemon)
+# then, we also sleep for duration equal to {awww --transition-duration} + small delta to be sure the new wallpaper is fully rendered
 
-swww_pid=$!
-wait $swww_pid
+awww_pid=$!
+wait $awww_pid
 sleep 2.50
 
 
